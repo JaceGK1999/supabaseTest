@@ -29,18 +29,31 @@ export async function getDirectorNames() {
 }
 
 export async function getMovieById(id) {
+  const resp = await client.from("movies").select("*").eq("id", id).single();
+  console.log(resp, "test 4");
   // return the movie with the given id
+  return checkError(resp);
 }
 
 export async function getMovieByTitle(title) {
+  const resp = await client
+    .from("movies")
+    .select("*")
+    .eq("title", title)
+    .single();
   // return the movie with the given title
+  return checkError(resp);
 }
 
 export async function getOldestMovie() {
+  const resp = await client.from("movies").select("*").eq("year").single();
   // return the oldest movie (assume the database is not sorted)
+  return checkError(resp);
 }
 
 export async function getMoviesAfter(year) {
+  const resp = await client.from("movies").select("*").gte(year, "year");
+  return checkError(resp);
   // return movies made after the year passed in
 }
 
