@@ -1,7 +1,6 @@
-const SUPABASE_URL = "https://njovlynmvtgkoexzepbb.supabase.co";
+const SUPABASE_URL = "https://edmczxuwjcwwnsmabezz.supabase.co";
 const SUPABASE_KEY =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTY0MTMxNjU3MSwiZXhwIjoxOTU2ODkyNTcxfQ.4sFYy_xhbdh7hVgaEmH_ILGTIl6rsqtUgzAJsizIxkA";
-
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVkbWN6eHV3amN3d25zbWFiZXp6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2NDQzNDE0MjEsImV4cCI6MTk1OTkxNzQyMX0.HouVg2N-Lni_g52lrL1Jla7gOhh61sUGEGckeyC8hnE";
 const client = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 function checkError({ data, error }) {
@@ -11,15 +10,22 @@ function checkError({ data, error }) {
 export async function getMovies() {
   // return the list of all movies
   const resp = await client.from("movies").select("*");
+  console.log(resp);
   return checkError(resp);
 }
 
 export async function getMoviesWithDirector() {
+  const movies = await client.from("movies").select("*, directors(*)");
+
+  return checkError(movies);
+
   // return the list of all the movies with their director
 }
 
 export async function getDirectorNames() {
+  const directors = await client.from("directors").select("name");
   // return the list of the director's names
+  return checkError(directors);
 }
 
 export async function getMovieById(id) {
